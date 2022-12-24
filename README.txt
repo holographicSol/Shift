@@ -1,14 +1,18 @@
 --- shift_console ---
 
-Short Description:
-Updates a file/dir backup location.
-Can Be used to 'update' a backup of steam instead of copying the entire steam directory for example.
+Saves writes.
+Saves time.
+Saves effort backing up.
+Enumeration is better than memory.
 
-The why?
-Saves writes to disk.
-Faster than copying everything in circumstances where modified files are unknown & or
-saves hassle of manually going in and out of directories looking for files that need to be backed/updated.
+[COPY NEW & UPDATE EXISTING]
+New Files: Copies any new files to backup location.
+Update Files: Compares modified timestamps and overwrites existing file with newer file version. 
 
+
+[EXAMPLE USES]
+* Many directories and modified files, documents etc.
+* Like a Steam directory for a example.
 
 [DEVELOPER]
 Please ensure win32 long paths are enabled either in registry or using gpedit.
