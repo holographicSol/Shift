@@ -1,7 +1,7 @@
 """
 Written by Benjamin Jack Cullen aka Holographic_Sol
 """
-
+import codecs
 import os
 import time
 import shutil
@@ -53,6 +53,68 @@ def config_read():
                     dst_str = ''
 
 
+def default_config_file():
+    prnt_title()
+    print("[CREATE DEFAULT CONFIGURATION FILE]\n")
+
+    # create if not exist
+    if not os.path.exists(cfg_file):
+        open(cfg_file, 'w').close()
+    else:
+        over_w = input('overwrite existing configuration file? ')
+        if over_w == 'y' or over_w == 'Y':
+            open(cfg_file, 'w').close()
+        else:
+            print_menu()
+
+    # specify root of configuration entries
+    default_in_root = input('specify root in: ')
+    if os.path.exists(default_in_root):
+
+        default_out_root = input('specify root out: ')
+        if os.path.exists(default_out_root):
+            print('creating configuration file...')
+
+            with codecs.open(cfg_file, 'a', encoding='utf8') as fo:
+                fo.write('IN ' + default_in_root + '\n')
+                fo.write('OUT ' + default_out_root + '\n')
+                fo.write('\n')
+                fo.write('IN ' + default_in_root + 'Archives\n')
+                fo.write('OUT ' + default_out_root + 'Archives\n')
+                fo.write('\n')
+                fo.write('IN ' + default_in_root + 'Documents\n')
+                fo.write('OUT ' + default_out_root + 'Documents\n')
+                fo.write('\n')
+                fo.write('IN ' + default_in_root + 'Music\n')
+                fo.write('OUT ' + default_out_root + 'Music\n')
+                fo.write('\n')
+                fo.write('IN ' + default_in_root + 'Pictures\n')
+                fo.write('OUT ' + default_out_root + 'Pictures\n')
+                fo.write('\n')
+                fo.write('IN ' + default_in_root + 'Programs\n')
+                fo.write('OUT ' + default_out_root + 'Programs\n')
+                fo.write('\n')
+                fo.write('IN ' + default_in_root + 'Videos\n')
+                fo.write('OUT ' + default_out_root + 'Videos\n')
+            fo.close()
+            print('')
+            print('[NEW CONFIGURATION ENTRIES]')
+            with codecs.open(cfg_file, 'r', encoding='utf8') as fo:
+                for line in fo:
+                    line = line.strip()
+                    print('   ', line)
+            print('')
+            input('return to menu: ')
+
+        else:
+            print('-- invalid path')
+            default_config_file()
+
+    else:
+        print('-- invalid path')
+        default_config_file()
+
+
 def print_menu():
     global keep_running, main_menu_config_data, cp_type
     prnt_title()
@@ -66,15 +128,20 @@ def print_menu():
     print('\n\n [OPTIONS]')
     print(" 1. Shift All")
     print(" 2. Shift Explicit Configuration Entry\n")
+    print("")
     print(' C. Configure')
+    print(' D. Write Default Configuration File')
     print(' R. Refresh')
     print(' Q. Quit\n')
     print(110 * '-')
+    choice = ''
     choice = input("Select: ")
     if choice == 'q' or choice == 'Q':
         keep_running = False
     elif choice == 'r' or choice == 'R':
         pass
+    elif choice == 'd' or choice == 'D':
+        default_config_file()
     elif choice == 'c' or choice == 'C':
         open_config_file()
     elif choice == "1" and len(dir_target_in) > 0 and len(dir_target_out) > 0:
